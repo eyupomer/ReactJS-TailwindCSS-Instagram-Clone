@@ -1,24 +1,20 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function Input({ label, type = "text", ...props }) {
-  const inputRef = useRef();
   const [show, setShow] = useState(false);
   const [inputType, setInputType] = useState(type);
 
   useEffect(() => {
     if (show) {
       setInputType("text");
-      inputRef.current.focus();
     } else if (type === "password") {
       setInputType("password");
-      inputRef.current.focus();
     }
   }, [show, type]);
 
   return (
     <label className="relative flex bg-zinc-100 border rounded-sm focus-within:border-gray-400">
       <input
-        ref={inputRef}
         required={true}
         type={inputType}
         className="text-xs px-2 w-full outline-none  h-[38px] valid:pt-[10px] peer"
@@ -28,13 +24,13 @@ export default function Input({ label, type = "text", ...props }) {
         {label}
       </small>
       {type === "password" && props?.value && (
-        <button
+        <div
           type="button"
           onClick={() => setShow(!show)}
-          className="h-full flex items-center font-semibold text-sm pr-2"
+          className="h-full flex items-center cursor-pointer select-none font-semibold text-sm pr-2"
         >
           {show ? "Gizle" : "Göster"}
-        </button>
+        </div>
       )}
     </label>
   );
